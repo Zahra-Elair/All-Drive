@@ -6,7 +6,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const styles = {
   button:
-    "p-6 border rounded flex justify-between items-center space-x-10 text-sm mt-6 w-full",
+    "p-6 border rounded flex justify-between items-center space-x-10 text-sm mt-6 w-full hover:bg-gray-50 duration-200",
 };
 
 const SidebarRight = () => {
