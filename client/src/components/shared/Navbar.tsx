@@ -1,16 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+interface Props {
+  toggleIsLeftSidebarActive: () => void;
+  toggleIsRightSidebarActive: () => void;
+}
+
+const Navbar = ({
+  toggleIsLeftSidebarActive,
+  toggleIsRightSidebarActive,
+}: Props) => {
   return (
     <nav className="bg-white py-3 border-b">
       <div className="flex items-center px-12">
-        <div className="text-xl text-blue-400 font-bold">All Drive</div>
+        <div className="mr-8 flex items-center">
+          <div className="hidden xl:block text-xl text-blue-500 font-bold">
+            All Drive
+          </div>
+          {/* toggle left sidebar button */}
+          <button className="xl:hidden" onClick={toggleIsLeftSidebarActive}>
+            <svg
+              width="22"
+              height="18"
+              viewBox="0 0 22 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect y="14" width="22" height="4" rx="2" fill="#017BFF" />
+              <rect y="7" width="22" height="4" rx="2" fill="#017BFF" />
+              <rect width="16" height="4" rx="2" fill="#017BFF" />
+            </svg>
+          </button>
+        </div>
         <div className="ml-auto">
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 sm:gap-12">
             {/* search input & upload, and create buttons */}
             <div className="flex items-center gap-4">
-              <form>
+              <form className="hidden lg:block">
                 <input
                   type="text"
                   placeholder="Type to seach..."
@@ -46,7 +72,7 @@ const Navbar = () => {
                 Create
               </Link>
             </div>
-            <div className="ml-12 flex items-center gap-8">
+            <div className="flex items-center gap-4 sm:gap-8">
               <button>
                 <svg
                   width="22"

@@ -9,9 +9,17 @@ const styles = {
     "p-6 border rounded flex justify-between items-center space-x-10 text-sm mt-6 w-full hover:bg-gray-50 duration-200",
 };
 
-const SidebarRight = () => {
+interface Props {
+  isOpen: boolean;
+}
+
+const SidebarRight = ({ isOpen }: Props) => {
   return (
-    <div className="bg-white border-l py-10 px-8 flex flex-col items-center">
+    <div
+      className={`bg-white border-l py-10 px-8 flex-col items-center ${
+        isOpen ? "flex" : "hidden"
+      } lg:!flex`}
+    >
       <div className="text-xl font-medium">My Storage</div>
       <div className="relative flex justify-center">
         <Doughnut
