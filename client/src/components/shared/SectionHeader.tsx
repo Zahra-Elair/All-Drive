@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { ITEM_TYPES, getItemIcon } from '../../data/static/items';
+import { ITEM_TYPES } from '../../types/items';
 import { MdNavigateNext } from 'react-icons/md';
+import { getItemIcon } from '../../libs/helpers/icons-management';
 type SectionHeaderProps = {
   title: string;
   type?: ITEM_TYPES;

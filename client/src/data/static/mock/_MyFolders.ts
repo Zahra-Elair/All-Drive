@@ -1,10 +1,49 @@
-import { ITEM_TYPES } from '../items';
+import { ITEM_TYPES } from '../../../types/items';
 
 type RecentFoldersProps = {
   id: number;
   name: string;
   type: ITEM_TYPES;
 }[];
+type CategoriesCardsProps = {
+  id: number;
+  name: string;
+  type: ITEM_TYPES;
+  files: number;
+}[];
+
+const Categories: CategoriesCardsProps = [
+  {
+    id: 1,
+    name: 'Text',
+    type: 'TEXT',
+    files: 220,
+  },
+  {
+    id: 2,
+    name: 'Audio',
+    type: 'AUDIO',
+    files: 270,
+  },
+  {
+    id: 3,
+    name: 'Video',
+    type: 'VIDEO',
+    files: 120,
+  },
+  {
+    id: 4,
+    name: 'Image',
+    type: 'IMAGE',
+    files: 460,
+  },
+  {
+    id: 5,
+    name: 'Others',
+    type: 'UNKNOWN',
+    files: 17,
+  },
+];
 
 const RecentFolder: RecentFoldersProps = [
   {
@@ -34,48 +73,48 @@ const AllFolders: RecentFoldersProps = [
   {
     id: 1,
     name: 'Folder 1',
-    type: 'FOLDER',
+    type: 'TEXT',
   },
   {
     id: 2,
     name: 'Folder 2',
-    type: 'FOLDER',
+    type: 'UNKNOWN',
   },
   {
     id: 3,
 
     name: 'Folder 3',
-    type: 'FILE',
+    type: 'TEXT',
   },
   {
     id: 4,
     name: 'Folder 4',
-    type: 'MUSIC',
+    type: 'AUDIO',
   },
   {
     id: 5,
     name: 'Folder 5',
-    type: 'FOLDER',
+    type: 'VIDEO',
   },
   {
     id: 6,
     name: 'Folder 6',
-    type: 'MUSIC',
+    type: 'AUDIO',
   },
   {
     id: 7,
     name: 'Folder 7',
-    type: 'FOLDER',
+    type: 'UNKNOWN',
   },
   {
     id: 8,
     name: 'Folder 8',
-    type: 'FOLDER',
+    type: 'IMAGE',
   },
   {
     id: 9,
     name: 'Folder 9',
-    type: 'MUSIC',
+    type: 'UNKNOWN',
   },
   {
     id: 10,
@@ -84,4 +123,4 @@ const AllFolders: RecentFoldersProps = [
   },
 ];
 
-export { RecentFolder, AllFolders };
+export { RecentFolder, AllFolders, Categories };
