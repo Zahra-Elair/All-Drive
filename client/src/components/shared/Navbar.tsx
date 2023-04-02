@@ -24,7 +24,7 @@ const Navbar = ({ toggleIsLeftSidebarActive, toggleIsRightSidebarActive }: Props
         <div className="ml-auto">
           <div className="flex items-center gap-4 sm:gap-12">
             {/* search input & upload, and create buttons */}
-            <div className="flex items-center gap-4">
+            <div className="hidden sm:flex items-center gap-4">
               <form className="hidden lg:block">
                 <input
                   type="text"
