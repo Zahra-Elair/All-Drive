@@ -9,7 +9,7 @@ type CategoryCardProps = {
 };
 const CategoryCard: FC<CategoryCardProps> = ({ name, type, files }) => {
   return (
-    <div className="flex items-center  bg-white flex-row gap-5  w-full border border-[#DEDEDE] cursor-pointer  rounded-md p-4">
+    <div className="flex items-center  bg-white flex-row gap-5 h-full  w-full border border-[#DEDEDE] cursor-pointer  rounded-md p-4">
       <div className="h-10 w-10 p-2 bg-[#F8F8F8]">
         <img className="w-full h-full" src={getItemIcon(type)} alt={name} />
       </div>
