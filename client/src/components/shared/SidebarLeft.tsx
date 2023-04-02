@@ -6,6 +6,7 @@ import historyIcon from "../../assets/icons/tabs/history.svg";
 import myFoldersIcon from "../../assets/icons/tabs/my-folders.svg";
 import sharedFilesIcon from "../../assets/icons/tabs/shared-files.svg";
 import recycleBinIcon from "../../assets/icons/tabs/recycle-bin.svg";
+import usePathName from "../../libs/hooks/usePathName";
 
 type Tab = {
   label: string;
@@ -26,22 +27,22 @@ const tabs: Tab[] = [
   },
   {
     label: "My Folders",
-    path: "/",
+    path: "/my-folders",
     icon: myFoldersIcon,
   },
   {
     label: "History",
-    path: "/",
+    path: "/history",
     icon: historyIcon,
   },
   {
     label: "Shared Files",
-    path: "/",
+    path: "/shaed-files",
     icon: sharedFilesIcon,
   },
   {
     label: "Recycle Bin",
-    path: "/",
+    path: "/recycle-bin",
     icon: recycleBinIcon,
   },
 ];
@@ -56,12 +57,17 @@ interface Props {
 }
 
 const SidebarLeft = ({ isOpen }: Props) => {
+  const pathname = usePathName();
   return (
     <div className={`bg-white border-r p-12 w-72 ${!isOpen ? "hidden" : ""} xl:!flex`}>
       <div className=" flex flex-col h-full">
         <div className="flex flex-col gap-8">
           {tabs.map((tab) => (
-            <Link to={tab.path} key={tab.path} className={styles.link}>
+            <Link
+              to={tab.path}
+              key={tab.path}
+              className={`${styles.link} ${pathname == tab.path ? styles.linkActive : ""}`}
+            >
               <img src={tab.icon} />
               {tab.label}
             </Link>

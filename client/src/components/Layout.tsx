@@ -24,8 +24,8 @@ const Layout = () => {
       />
       <div className="flex-1 flex">
         <SidebarLeft isOpen={isLeftSidebarOpen} />
-        <main className="flex-1">
-          <div className="py-10 px-12">
+        <main className="flex-1 ">
+          <div className="py-10 px-8">
             <Outlet />
           </div>
         </main>
