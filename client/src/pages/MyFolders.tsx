@@ -1,27 +1,18 @@
-import SectionHeader from '../components/shared/SectionHeader';
-import Seperator from '../components/shared/Seperator';
-import CategoryCard from '../components/shared/cards/category-card';
-import ItemCard from '../components/shared/cards/item-card';
-import { AllFolders, Categories, RecentFolder } from '../data/static/mock';
+import SectionHeader from "../components/shared/SectionHeader";
+import Seperator from "../components/shared/Seperator";
+import CategoryCard from "../components/shared/cards/category-card";
+import ItemCard from "../components/shared/cards/item-card";
+import { AllFolders, Categories, RecentFolder } from "../data/static/mock";
 
 const MyFolders = () => {
   return (
     <div>
       <section>
-        <SectionHeader
-          title="Username"
-          subTitle={[{ title: 'Folders' }]}
-          className="mb-4"
-        />
+        <SectionHeader title="Username" subTitle={[{ title: "Folders" }]} className="mb-4" />
         <div className="flex flex-wrap  items-center  gap-x-4 gap-y-4 justify-between  ">
           {Categories.map((cat) => (
             <div key={cat.id} className="min-w-max w-full max-w-[10rem]">
-              <CategoryCard
-                key={cat.id}
-                type={cat.type}
-                name={cat.name}
-                files={cat.files}
-              />
+              <CategoryCard key={cat.id} type={cat.type} name={cat.name} files={cat.files} />
             </div>
           ))}
         </div>
