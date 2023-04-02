@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { ITEM_TYPES } from '../../types/items';
 import { MdNavigateNext } from 'react-icons/md';
 import { getItemIcon } from '../../libs/helpers/icons-management';
+import cn from 'classnames';
 type SectionHeaderProps = {
   title: string;
   type?: ITEM_TYPES;
@@ -9,13 +10,15 @@ type SectionHeaderProps = {
     title: string;
   }[];
 };
-const SectionHeader: FC<SectionHeaderProps> = ({
+const SectionHeader: FC<Partial<HTMLDivElement> & SectionHeaderProps> = ({
   title,
   subTitle,
   type = 'FOLDER',
+  ...rest
 }) => {
+  const { className } = rest;
   return (
-    <div className="flex items-baseline justify-start  gap-4 mb-4">
+    <div className={cn('flex items-baseline justify-start  gap-4 ', className)}>
       <img src={getItemIcon(type)} alt={title} />
       <h1 className="text-lg capitalize">{title}</h1>
       {subTitle &&

@@ -1,43 +1,49 @@
 import SectionHeader from '../components/shared/SectionHeader';
+import Seperator from '../components/shared/Seperator';
 import CategoryCard from '../components/shared/cards/category-card';
 import ItemCard from '../components/shared/cards/item-card';
-import Seperator from '../components/shared/seperator';
 import { AllFolders, Categories, RecentFolder } from '../data/static/mock';
 
 const MyFolders = () => {
   return (
-    <section>
-      <div>
-        <SectionHeader title="Username" subTitle={[{ title: 'Folders' }]} />
-        <div className="flex flex-row items-center justify-between gap-10 ">
+    <div>
+      <section>
+        <SectionHeader
+          title="Username"
+          subTitle={[{ title: 'Folders' }]}
+          className="mb-4"
+        />
+        <div className="flex flex-wrap  items-center  gap-x-4 gap-y-4 justify-between  ">
           {Categories.map((cat) => (
-            <CategoryCard
-              key={cat.id}
-              type={cat.type}
-              name={cat.name}
-              files={cat.files}
-            />
+            <div key={cat.id} className="min-w-max w-full max-w-[10rem]">
+              <CategoryCard
+                key={cat.id}
+                type={cat.type}
+                name={cat.name}
+                files={cat.files}
+              />
+            </div>
           ))}
         </div>
-      </div>
+      </section>
       <Seperator />
-      <div>
-        <SectionHeader title="Recent folders" />
+      <section>
+        <SectionHeader title="Recent folders" className="mb-4" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4  gap-y-4  ">
           {RecentFolder.map((folder) => (
             <ItemCard key={folder.id} type={folder.type} name={folder.name} />
           ))}
         </div>
-      </div>
+      </section>
       <Seperator />
-      <div>
+      <section>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4  gap-y-4  ">
           {AllFolders.map((folder) => (
             <ItemCard key={folder.id} type={folder.type} name={folder.name} />
           ))}
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 
