@@ -6,17 +6,30 @@ import SidebarLeft from "./shared/SidebarLeft";
 import SidebarRight from "./shared/SidebarRight";
 
 const Layout = () => {
+  const [isLeftSidebarOpen, setIsLeftSidebarOpen] = React.useState(false);
+  const [isRightSidebarOpen, setIsRightSidebarOpen] = React.useState(false);
+
+  function toggleIsLeftSidebarActive() {
+    setIsLeftSidebarOpen(!isLeftSidebarOpen);
+  }
+  function toggleIsRightSidebarActive() {
+    setIsRightSidebarOpen(!isRightSidebarOpen);
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <Navbar
+        toggleIsLeftSidebarActive={toggleIsLeftSidebarActive}
+        toggleIsRightSidebarActive={toggleIsRightSidebarActive}
+      />
       <div className="flex-1 flex">
-        <SidebarLeft />
+        <SidebarLeft isOpen={isLeftSidebarOpen} />
         <main className="flex-1">
           <div className="py-10 px-12">
             <Outlet />
           </div>
         </main>
-        <SidebarRight />
+        <SidebarRight isOpen={isRightSidebarOpen} />
       </div>
       <Footer />
     </div>

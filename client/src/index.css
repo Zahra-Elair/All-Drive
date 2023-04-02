@@ -12,6 +12,29 @@ body {
   }
 
   .btn {
-    @apply px-6 py-3 rounded;
+    @apply px-6 py-3 rounded flex items-center gap-3 font-medium;
+  }
+  .btn-sm {
+    @apply btn px-4 py-2 text-sm;
+  }
+
+  .btn-primary {
+    @apply bg-blue-500 hover:bg-blue-600 text-white;
+  }
+  .btn-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-700;
+  }
+
+  .form-group {
+    @apply my-8;
+  }
+  .form-group label {
+    @apply text-blue-500 font-medium text-sm;
+  }
+  .form-control {
+    @apply mt-1 border-2 border-blue-400 bg-white rounded px-4 py-2 w-full focus:outline-none focus:border-blue-500;
+  }
+  .link-black {
+    @apply text-black font-medium hover:underline;
   }
 }
