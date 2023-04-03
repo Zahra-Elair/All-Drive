@@ -17,7 +17,9 @@ const ItemCard: FC<Partial<HTMLDivElement> & ItemCardProps> = (props) => {
           <img className="w-full h-full" src={getItemIcon(type)} alt={name} />
         </div>
       )}
-      <span className="text-sm">{name}</span>
+      <span className="text-sm text-ellipsis whitespace-nowrap overflow-hidden">
+        {name}
+      </span>
     </div>
   );
 };
