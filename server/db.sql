@@ -15,6 +15,12 @@ create table drive (
 	name varchar(255) not null -- e.g: Google Drive, One Drive, ...
 );
 
+insert into drive (id, name) values
+				(1, "Google Drive"),
+				(2, "Microsoft One Drive"),
+				(3, "Mega"),
+				(4, "Dropbox");
+
 create table userDrive (
 	userId int not null,
 	driveId int not null,
