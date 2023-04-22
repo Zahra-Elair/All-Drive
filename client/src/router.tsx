@@ -1,12 +1,12 @@
-import { createBrowserRouter } from 'react-router-dom';
-import Layout from './components/Layout';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Register from './pages/Register';
-import AddDrive from './pages/AddDrive';
-import MyFolders from './pages/MyFolders';
-import RecycleBin from './pages/RecycleBin';
-import SharedFiles from './pages/SharedFiles';
+import { createBrowserRouter } from "react-router-dom";
+import Layout from "./components/Layout";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Register from "./pages/Register";
+import AddDrive from "./pages/AddDrive";
+import MyFolders from "./pages/MyFolders";
+import RecycleBin from "./pages/RecycleBin";
+import SharedFiles from "./pages/SharedFiles";
 
 type PATHSProps = {
   app: {
@@ -33,24 +33,24 @@ type PATHSProps = {
 
 export const PATHS: PATHSProps = {
   app: {
-    root: '/',
-    about: '/about',
-    contact: '/contact',
-    myFolders: '/my-folders',
-    myFiles: '/my-files',
-    myProfile: '/my-profile',
-    mySettings: '/my-settings',
-    addDrive: '/add-drive',
-    history: '/history',
-    sharedFiles: '/shared-files',
-    recycleBin: '/recycle-bin',
+    root: "/",
+    about: "/about",
+    contact: "/contact",
+    myFolders: "/my-folders",
+    myFiles: "/my-files",
+    myProfile: "/my-profile",
+    mySettings: "/my-settings",
+    addDrive: "/add-drive",
+    history: "/history",
+    sharedFiles: "/shared-files",
+    recycleBin: "/recycle-bin",
   },
   auth: {
-    root: '/auth',
-    login: '/auth/login',
-    register: '/auth/register',
-    forgotPassword: '/auth/forgot-password',
-    resetPassword: '/auth/reset-password',
+    root: "/auth",
+    login: "/auth/sign",
+    register: "/auth/register",
+    forgotPassword: "/auth/forgot-password",
+    resetPassword: "/auth/reset-password",
   },
 };
 

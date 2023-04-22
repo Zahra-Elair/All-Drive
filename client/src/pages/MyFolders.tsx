@@ -1,8 +1,8 @@
-import SectionHeader from '../components/shared/SectionHeader';
-import Seperator from '../components/shared/Seperator';
-import CategoryCard from '../components/shared/cards/category-card';
-import ItemCard from '../components/shared/cards/item-card';
-import { AllFolders, Categories, RecentFolder } from '../data/static/mock';
+import SectionHeader from "../components/shared/SectionHeader";
+import CategoryCard from "../components/shared/cards/category-card";
+import ItemCard from "../components/shared/cards/item-card";
+import { AllFolders, Categories, RecentFolder } from "../data/static/mock";
+import Seperator from "../components/shared/Seperator";
 
 const MyFolders = () => {
   return (
@@ -10,7 +10,7 @@ const MyFolders = () => {
       <section>
         <SectionHeader
           title="Username"
-          subTitle={[{ title: 'Folders' }]}
+          subTitle={[{ title: "Folders" }]}
           className="mb-4"
         />
         <div className="flex flex-wrap  items-center  gap-x-4 gap-y-4 justify-between  ">
