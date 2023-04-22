@@ -47,7 +47,7 @@ router.post("/login", function (req, res) {
                             if (same) {
                                 const token = jwt.sign(
                                     { userId: user.id },
-                                    process.env.JWT_SECRET
+                                    process.env.ACCESS_TOKEN_SECRET
                                 );
                                 res.send(token);
                             } else {
