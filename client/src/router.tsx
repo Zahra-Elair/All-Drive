@@ -46,7 +46,7 @@ export const PATHS: PATHSProps = {
         history: "/history",
         sharedFiles: "/shared-files",
         recycleBin: "/recycle-bin",
-        addDriveMiddleware: "/add-drive-middleware",
+        addDriveMiddleware: "/add-drive-middleware/:type/:access_token",
     },
     auth: {
         root: "/auth",

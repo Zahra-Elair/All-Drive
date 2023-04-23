@@ -5,7 +5,7 @@ import { drives } from "../data/static/mock";
 import AddDriveIcon from "../assets/icons/add-drive.svg";
 import { replaceURL } from "../libs/helpers/replace-location";
 
-const path = "http://localhost:3000/drive";
+const path = "http://localhost:3000/";
 const AddDrive = () => {
     return (
         <div>

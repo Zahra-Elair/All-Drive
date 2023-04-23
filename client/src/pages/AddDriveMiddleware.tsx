@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function AddDriveMiddleware() {
-    const params = useParams();
+    const { type, access_token } = useParams();
+    const navigate = useNavigate();
     useEffect(() => {
-        console.log(params);
-    }, [params]);
+        localStorage.setItem(type as string, access_token as string);
+        navigate("/");
+    }, [access_token, type]);
     return <h1>Redirect</h1>;
 }
 
