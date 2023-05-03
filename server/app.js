@@ -21,6 +21,7 @@ main();
 
 app.use("/", require("./google-drive-routes"));
 app.use("/auth", require("./routes/auth"));
+app.use("/drive", require("./routes/drive"));
 app.use("/user-drive", authMiddleware, require("./routes/user-drive"));
 
 app.listen(PORT, function () {
