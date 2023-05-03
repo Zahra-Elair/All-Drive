@@ -10,7 +10,7 @@ const userDriveSchema = new mongoose.Schema({
         required: true,
     },
     token: {
-        token: String,
+        type: String,
     },
 });
 

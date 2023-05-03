@@ -37,8 +37,7 @@ router.post("/", async function (req, res) {
 
         if (userDrive) {
             userDrive.token = token;
-            console.log(userDrive);
-            userDrive.save();
+            await userDrive.save();
             res.send("Drive token updated");
         } else {
             userDrive = new UserDrive({
@@ -47,7 +46,7 @@ router.post("/", async function (req, res) {
                 token,
             });
 
-            userDrive.save();
+            await userDrive.save();
             res.status(201).send("Connected to new drive");
         }
 

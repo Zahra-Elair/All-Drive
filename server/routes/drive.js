@@ -2,8 +2,8 @@ const Drive = require("../models/drive");
 
 const router = require("express").Router();
 
-router.get("/", (req, res) => {
-    const drives = Drive.find();
+router.get("/", async (req, res) => {
+    let drives = await Drive.find();
 
     res.send(drives);
 });
