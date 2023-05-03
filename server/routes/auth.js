@@ -42,7 +42,7 @@ router.post("/login", async function (req, res) {
                     { userId: user._id },
                     process.env.ACCESS_TOKEN_SECRET
                 );
-                res.json({ token });
+                res.json({ token, username: user.username });
             } else {
                 res.status(401).send("Wrong credentials");
             }
