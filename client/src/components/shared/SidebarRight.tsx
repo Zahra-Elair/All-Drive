@@ -2,16 +2,9 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { api } from "../../api";
+import { convertBytesToGiga, getPercentage } from "../../libs/helpers/convert";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-function convertBytesToGiga(size: number): string {
-    return (size / 1e9).toFixed(2);
-}
-
-function getPercentage(portion: number, all: number) {
-    return ((portion * 100) / all).toFixed(0);
-}
 
 const styles = {
     button: "p-6 border rounded flex justify-between items-center space-x-10 text-sm mt-6 w-full hover:bg-gray-50 duration-200",

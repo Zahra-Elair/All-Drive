@@ -8,6 +8,7 @@ import MyFolders from "./pages/MyFolders";
 import RecycleBin from "./pages/RecycleBin";
 import SharedFiles from "./pages/SharedFiles";
 import AddDriveMiddleware from "./pages/AddDriveMiddleware";
+import FolderFiles from "./pages/folderFiles";
 
 type PATHSProps = {
     app: {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
             {
                 path: PATHS.app.addDriveMiddleware,
                 element: <AddDriveMiddleware />,
+            },
+            {
+                path: PATHS.app.myFolders + "/:id",
+                element: <FolderFiles />,
             },
         ],
     },

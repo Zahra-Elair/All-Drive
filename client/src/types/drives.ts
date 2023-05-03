@@ -1,3 +1,3 @@
-type DriveTypes = "Google Drive" | "One Drive" | "Dropbox Files" | "Mega Drive";
+type DriveTypes = "google-drive" | "one-drive" | "dropbox-files" | "mega-drive";
 
 export type { DriveTypes };

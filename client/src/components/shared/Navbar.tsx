@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import { PATHS } from "../../router";
+import { useAuth } from "../../context/auth-context";
 interface Props {
     toggleIsLeftSidebarActive: () => void;
     toggleIsRightSidebarActive: () => void;
@@ -11,7 +12,7 @@ const Navbar = ({
     toggleIsLeftSidebarActive,
     toggleIsRightSidebarActive,
 }: Props) => {
-    const navigate = useNavigate();
+    const { isAutheticated, username } = useAuth();
 
     return (
         <nav className="bg-white py-6 border-b">
@@ -129,7 +130,9 @@ const Navbar = ({
                                     />
                                 </svg>
                             </button>
-                            <p>Hazem</p>
+                            {isAutheticated && (
+                                <p className="capitalize">{username}</p>
+                            )}
                         </div>
                     </div>
                 </div>

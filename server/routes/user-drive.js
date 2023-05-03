@@ -90,6 +90,8 @@ router.post("/getFiles", async (req, res) => {
 
 router.post("/about", async (req, res) => {
     if (!req.auth.userId) return res.send("User not found");
+    console.log("I am hitting this api");
+    console.log("body ", req.body);
     const { token, driveName } = req.body;
     if (!token) return res.status(400).json({ message: "Bad request" });
     const drive = getDriveInstance(token);
@@ -97,7 +99,9 @@ router.post("/about", async (req, res) => {
         const driveInformations = await drive.about.get({
             fields: "storageQuota",
         });
-        res.status(200).json({ data: { ...driveInformations, driveName } });
+        res.status(200).json({
+            data: { ...driveInformations.data.storageQuota, driveName },
+        });
     } catch (error) {
         console.log(error);
         res.status(500).send("Server error");

@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
 type AuthContextType = {
     token: string | null;
     username: string | null;
@@ -31,6 +30,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }) => {
         localStorage.setItem("token", token);
         localStorage.setItem("username", username);
+
         setToken(token);
         setUsername(username);
         setIsAutheticated(true);

@@ -6,25 +6,30 @@ import Seperator from "../components/shared/Seperator";
 import { useEffect, useState } from "react";
 import { api } from "../api";
 import { Folder } from "../types/folder";
+import { useParams } from "react-router-dom";
 
-const MyFolders = () => {
-    const [folders, setFolders] = useState<Folder[]>([]);
+const FolderFiles = () => {
+    const [files, setFiles] = useState<Folder[]>([]);
+    const { id } = useParams<{ id: string }>();
     const [token, setToken] = useState(() =>
         localStorage.getItem("google-drive")
     );
-    function getFolders() {
+    function getFiles() {
         api.post(
-            "/user-drive/getFolders",
-            { token },
+            "/user-drive/getFiles",
+            { folderId: id, token },
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
             }
-        ).then((res) => setFolders(res.data));
+        ).then((res) => {
+            console.log(res.data);
+            setFiles(res.data.data);
+        });
     }
     useEffect(() => {
-        getFolders();
+        getFiles();
     }, []);
     return (
         <div>
@@ -52,32 +57,12 @@ const MyFolders = () => {
             </section>
             <Seperator />
             <section>
-                <SectionHeader title="Recent folders" className="mb-4" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4  gap-y-4  ">
-                    {RecentFolder.map((folder) => (
+                    {files.map((file) => (
                         <ItemCard
-                            key={folder.id}
-                            type={folder.type}
-                            name={folder.name}
-                        />
-                    ))}
-                </div>
-            </section>
-            <Seperator />
-            <section>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4  gap-y-4  ">
-                    {/* {AllFolders.map((folder) => (
-                        <ItemCard
-                            key={folder.id}
-                            type={folder.type}
-                            name={folder.name}
-                        />
-                    ))} */}
-                    {folders.map((folder) => (
-                        <ItemCard
-                            key={folder.id}
-                            name={folder.name}
-                            id={folder.id}
+                            key={file.id}
+                            name={file.name}
+                            type={file.mimeType as any}
                         />
                     ))}
                 </div>
@@ -86,4 +71,4 @@ const MyFolders = () => {
     );
 };
 
-export default MyFolders;
+export default FolderFiles;
