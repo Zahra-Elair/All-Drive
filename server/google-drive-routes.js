@@ -32,6 +32,7 @@ router.get("/auth", async (req, res) => {
 
     //remove dots from token
     const token = tokens.access_token;
+    console.log(token);
     const redirectLink = `http://localhost:9000/add-drive-middleware/google-drive/${token}`;
     res.redirect(redirectLink);
 });

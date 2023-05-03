@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const salt = 10;
 const { User, UserDriveSchema, userDriveSchema } = require("../models/user");
-const { getDriveInstance } = require("../google-drive-routes").getDriveInstance;
+const { getDriveInstance } = require("../google-drive-routes");
 // This route is PROTECTED by auth middleware
 
 // will get you all connected drives with tokens [driveId, token]
@@ -51,7 +51,7 @@ router.post("/", async function (req, res) {
     }
 });
 
-router.post("/getFiles", async (req, res) => {
+router.post("/getFolders", async (req, res) => {
     if (!req.auth.userId) return res.send("User not found");
     const token = req.body.token;
     if (!token) return res.status(400).json({ message: "Bad request" });
@@ -69,16 +69,35 @@ router.post("/getFiles", async (req, res) => {
     }
 });
 
+router.post("/getFiles", async (req, res) => {
+    if (!req.auth.userId) return res.send("User not found");
+    const { token, folderId, folderName } = req.body;
+    if (!(token && folderId))
+        return res.status(400).json({ message: "Bad request" });
+    const drive = getDriveInstance(token);
+    const response = await drive.files.list({
+        pageSize: 10,
+        q: `'${folderId}' in parents and trashed = false`,
+        fields: "files(id, name, createdTime,mimeType)",
+    });
+    const files = response.data.files;
+    if (files.length) {
+        res.json({ data: files });
+    } else {
+        res.send("No files found.");
+    }
+});
+
 router.post("/about", async (req, res) => {
     if (!req.auth.userId) return res.send("User not found");
-    const token = req.body.token;
+    const { token, driveName } = req.body;
     if (!token) return res.status(400).json({ message: "Bad request" });
     const drive = getDriveInstance(token);
     try {
         const driveInformations = await drive.about.get({
             fields: "storageQuota",
         });
-        res.send(driveInformations);
+        res.status(200).json({ data: { ...driveInformations, driveName } });
     } catch (error) {
         console.log(error);
         res.status(500).send("Server error");
