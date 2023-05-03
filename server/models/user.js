@@ -24,7 +24,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    drives: [userDriveSchema],
+    drives: [
+        {
+            driveName: {
+                type: String,
+                required: true,
+            },
+            token: {
+                type: String,
+                required: String,
+            },
+        },
+    ],
 });
 
 const User = mongoose.model("User", userSchema);

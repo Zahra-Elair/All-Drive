@@ -27,40 +27,27 @@ router.get("/", async function (req, _res) {
 router.post("/", async function (req, res) {
     const { driveName, token } = req.body;
     const { userId } = req.auth;
-    console.log(userId);
 
     if (userId && driveName && token && token.length) {
         // Check if Drive exists?
         let user = await User.findOne({ _id: userId });
         console.log(user);
         if (!user) return res.send("User not found");
-        if (user.drives) {
-            user.drives.forEach((d, i) => {
-                if (d.driveName == driveName) user.drives[i].token = token;
-            });
+        try {
+            if (user.drives.length)
+                user.drives.forEach((d, i) => {
+                    if (d.driveName == driveName) user.drives[i].token = token;
+                });
+            else user.drives.push({ driveName, token });
             await user.save();
-            res.send("Drive token updated");
-        } else {
-            userDriveSchema = new UserDriveSchema({
-                driveName,
-                token,
+            res.status(201).json({
+                message: "Drive created/updated successfully",
             });
-            user.updateOne(
-                { $push: { drives: userDriveSchema } },
-                { new: true },
-                function (err, user) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log(user);
-                    }
-                }
-            );
-            await userDrive.save();
-            res.status(201).send("Connected to new drive");
+        } catch (error) {
+            res.status(422).json({ message: "Invalid data" });
         }
     } else {
-        res.status(422).send("Invalid data");
+        res.status(422).json({ message: "Invalid data" });
     }
 });
 
