@@ -47,38 +47,6 @@ function getDriveInstance(token) {
     return drive;
 }
 
-router.post("/getFiles", async (req, res) => {
-    const token = req.body.token;
-    if (!token) return res.status(400).json({ message: "Bad request" });
-    const drive = getDriveInstance(token);
-    const response = await drive.files.list({
-        pageSize: 10,
-        q: "mimeType='application/vnd.google-apps.folder'",
-        fields: "nextPageToken, files(id, name,mimeType)",
-    });
-    const files = response.data.files;
-    if (files.length) {
-        res.send(files);
-    } else {
-        res.send("No files found.");
-    }
-});
-
-router.post("/about", async (req, res) => {
-    const token = req.body.token;
-    if (!token) return res.status(400).json({ message: "Bad request" });
-    const drive = getDriveInstance(token);
-    try {
-        const driveInformations = await drive.about.get({
-            fields: "storageQuota",
-        });
-        res.send(driveInformations);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("Server error");
-    }
-});
-
 router.get("/drives", () => {});
 
 module.exports = { router, getDriveInstance };
