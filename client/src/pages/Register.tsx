@@ -78,7 +78,7 @@ const Register = () => {
                 navigate(PATHS.auth.login);
             })
             .catch((err) => {
-                toast.error(err.response.data.message);
+                toast.error(err.msg);
             });
     };
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,12 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DriveCard from "../components/shared/cards/drive-card";
 import SectionHeader from "../components/shared/SectionHeader";
 import { drives } from "../data/static/mock";
 import AddDriveIcon from "../assets/icons/add-drive.svg";
 import { replaceURL } from "../libs/helpers/replace-location";
-
+import { api } from "../api";
 const path = "http://localhost:3000/";
 const AddDrive = () => {
+    const [myDrives, setMyDrives] = React.useState([]);
+    useEffect(() => {
+        const getDrives = async () => {
+            try {
+                const res = await api.get("/user-drive", {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "token"
+                        )}`,
+                    },
+                });
+                setMyDrives(res.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getDrives();
+    }, []);
+
     return (
         <div>
             <div className=" flex items-center justify-between mb-8">

@@ -3,15 +3,22 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const salt = 10;
 const { User, UserDriveSchema, userDriveSchema } = require("../models/user");
-const { getDriveInstance } = require("../google-drive-routes");
+const { getDriveInstance } = require("../google-drive-routes").getDriveInstance;
 // This route is PROTECTED by auth middleware
 
 // will get you all connected drives with tokens [driveId, token]
 // ? can do INNER JOIN to get driveName
 router.get("/", async function (req, res) {
     const { userId } = req.auth; // coming from auth middleware
-    const user = await User.find({ userId });
-    res.send(user.drives);
+    let drives = [];
+    try {
+        const res = await User.find({ userId });
+        drives = res.drives;
+        res.send(drives);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Server error");
+    }
 });
 
 // save or update user drive token

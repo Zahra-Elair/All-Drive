@@ -37,7 +37,7 @@ router.get("/auth", async (req, res) => {
     res.redirect(redirectLink);
 });
 
-export function getDriveInstance(token) {
+function getDriveInstance(token) {
     const auth = new google.auth.OAuth2({
         clientId,
         clientSecret,
@@ -81,4 +81,4 @@ router.post("/about", async (req, res) => {
 
 router.get("/drives", () => {});
 
-module.exports = router;
+module.exports = { router, getDriveInstance };

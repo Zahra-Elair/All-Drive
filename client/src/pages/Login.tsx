@@ -54,7 +54,7 @@ const Login = () => {
                 navigate(PATHS.app.root);
             })
             .catch((err) => {
-                toast.error(err.response.data.message);
+                toast.error(err.msg);
             });
     };
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
