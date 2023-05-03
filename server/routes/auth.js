@@ -2,7 +2,7 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const salt = 10;
-const User = require("../models/user");
+const { User } = require("../models/user");
 
 router.post("/register", function (req, res) {
     const { username, email, password } = req.body;
@@ -10,17 +10,6 @@ router.post("/register", function (req, res) {
     if (username && email && password) {
         bcrypt.hash(password, salt, async function (err, hashedPassword) {
             if (err) return res.status(400).send(err);
-
-            // db.query(
-            //     "INSERT INTO user (username, email, password) VALUES (?, ?, ?)",
-            //     [username, email, hashedPassword],
-            //     function (err, result) {
-            //         if (err) return res.status(400).send(err);
-
-            //         res.send("User created");
-            //     }
-            // );
-
             const user = new User({
                 username,
                 email,
@@ -53,7 +42,7 @@ router.post("/login", async function (req, res) {
                     { userId: user._id },
                     process.env.ACCESS_TOKEN_SECRET
                 );
-                res.send(token);
+                res.json({ token });
             } else {
                 res.status(401).send("Wrong credentials");
             }
