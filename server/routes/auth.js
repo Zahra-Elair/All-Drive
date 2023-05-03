@@ -1,65 +1,63 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const db = require("../db");
 const salt = 10;
+const User = require("../models/user");
 
 router.post("/register", function (req, res) {
     const { username, email, password } = req.body;
 
     if (username && email && password) {
-        bcrypt.hash(password, salt, function (err, hashedPassword) {
+        bcrypt.hash(password, salt, async function (err, hashedPassword) {
             if (err) return res.status(400).send(err);
 
-            db.query(
-                "INSERT INTO user (username, email, password) VALUES (?, ?, ?)",
-                [username, email, hashedPassword],
-                function (err, result) {
-                    if (err) return res.status(400).send(err);
+            // db.query(
+            //     "INSERT INTO user (username, email, password) VALUES (?, ?, ?)",
+            //     [username, email, hashedPassword],
+            //     function (err, result) {
+            //         if (err) return res.status(400).send(err);
 
-                    res.send("User created");
-                }
-            );
+            //         res.send("User created");
+            //     }
+            // );
+
+            const user = new User({
+                username,
+                email,
+                password: hashedPassword,
+            });
+
+            await user.save();
+
+            res.send("User created");
         });
     } else {
         res.status(422).send("Invalid data");
     }
 });
 
-router.post("/login", function (req, res) {
+router.post("/login", async function (req, res) {
     const { email, password } = req.body;
 
     if (email && password) {
-        db.query(
-            "SELECT id, password FROM user WHERE email = ?",
-            email,
-            function (err, users) {
-                if (err) return res.status(400).send(err);
+        const user = await User.findOne({ email });
 
-                if (users && users.length) {
-                    const user = users.pop();
+        if (!user) {
+            return res.status(404).send("Invalid credentials");
+        }
 
-                    bcrypt.compare(
-                        password,
-                        user.password,
-                        function (err, same) {
-                            if (err) return res.status(400).send(err);
-                            if (same) {
-                                const token = jwt.sign(
-                                    { userId: user.id },
-                                    process.env.ACCESS_TOKEN_SECRET
-                                );
-                                res.send(token);
-                            } else {
-                                res.status(401).send("Wrong credentials");
-                            }
-                        }
-                    );
-                } else {
-                    res.status(401).send("Wrong credentials");
-                }
+        bcrypt.compare(password, user.password, function (err, same) {
+            if (err) return res.status(400).send(err);
+            if (same) {
+                const token = jwt.sign(
+                    { userId: user._id },
+                    process.env.ACCESS_TOKEN_SECRET
+                );
+                res.send(token);
+            } else {
+                res.status(401).send("Wrong credentials");
             }
-        );
+        });
     } else {
         res.status(422).send("Invalid data");
     }

@@ -10,6 +10,7 @@ function authMiddleware(req, res, next) {
             if (err) return res.sendStatus(403);
 
             req.auth = payload;
+
             // auth: { userId }
             next();
         });
