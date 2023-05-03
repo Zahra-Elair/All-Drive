@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const PORT = 9000;
+const PORT = 3000;
 const mongoose = require("mongoose");
 
 const authMiddleware = require("./middlewares/auth");

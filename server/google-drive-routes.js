@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
     });
 
     const authUrl = auth.generateAuthUrl({
-        access_type: "oneline",
+        access_type: "online",
         redirect_uri: redirectUrl,
         scope: scopes,
     });
