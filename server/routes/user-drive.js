@@ -8,16 +8,17 @@ const { getDriveInstance } = require("../google-drive-routes").getDriveInstance;
 
 // will get you all connected drives with tokens [driveId, token]
 // ? can do INNER JOIN to get driveName
-router.get("/", async function (req, res) {
+router.get("/", async function (req, _res) {
     const { userId } = req.auth; // coming from auth middleware
+    console.log(userId);
     let drives = [];
     try {
-        const res = await User.find({ userId });
-        drives = res.drives;
-        res.send(drives);
+        const user = await User.findOne({ _id: userId });
+        drives = user.drives;
+        _res.json({ data: drives });
     } catch (error) {
         console.log(error);
-        res.status(500).send("Server error");
+        _res.status(500).send("Server error");
     }
 });
 

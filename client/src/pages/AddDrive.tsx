@@ -11,14 +11,16 @@ const AddDrive = () => {
     useEffect(() => {
         const getDrives = async () => {
             try {
-                const res = await api.get("/user-drive", {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "token"
-                        )}`,
-                    },
-                });
-                setMyDrives(res.data);
+                const res = await api
+                    .get("/user-drive", {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem(
+                                "token"
+                            )}`,
+                        },
+                    })
+                    .then((res) => console.log(res.data));
+                // setMyDrives(res.data);
             } catch (error) {
                 console.log(error);
             }
