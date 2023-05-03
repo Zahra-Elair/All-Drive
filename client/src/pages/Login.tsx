@@ -5,6 +5,7 @@ import { PATHS } from "../router";
 import axios from "axios";
 import { api } from "../api";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/auth-context";
 type loginForm = {
     email: string;
     password: string;
@@ -12,6 +13,8 @@ type loginForm = {
 
 const Login = () => {
     const navigate = useNavigate();
+    const { login } = useAuth();
+
     const [userInfo, setUserInfo] = React.useState<loginForm>({
         email: "",
         password: "",
@@ -49,7 +52,10 @@ const Login = () => {
         if (!validate()) return;
         api.post("/auth/login", userInfo)
             .then((res) => {
-                localStorage.setItem("token", res.data.token);
+                login({
+                    token: res.data.token,
+                    username: res.data.username,
+                });
                 toast.success("Welcone to All Drive");
                 navigate(PATHS.app.root);
             })

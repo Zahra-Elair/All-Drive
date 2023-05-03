@@ -12,10 +12,6 @@ const Navbar = ({
     toggleIsRightSidebarActive,
 }: Props) => {
     const navigate = useNavigate();
-    const logout = () => {
-        localStorage.clear();
-        navigate(PATHS.auth.login);
-    };
 
     return (
         <nav className="bg-white py-6 border-b">
@@ -134,9 +130,6 @@ const Navbar = ({
                                 </svg>
                             </button>
                             <p>Hazem</p>
-                            <button onClick={logout}>
-                                <BiLogOut className="text-black w-6 h-6  " />
-                            </button>
                         </div>
                     </div>
                 </div>

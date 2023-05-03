@@ -27,10 +27,12 @@ router.get("/", async function (req, _res) {
 router.post("/", async function (req, res) {
     const { driveName, token } = req.body;
     const { userId } = req.auth;
+    console.log(userId);
 
     if (userId && driveName && token && token.length) {
         // Check if Drive exists?
-        let user = await User.findOne({ userId });
+        let user = await User.findOne({ _id: userId });
+        console.log(user);
         if (!user) return res.send("User not found");
         if (user.drives) {
             user.drives.forEach((d, i) => {

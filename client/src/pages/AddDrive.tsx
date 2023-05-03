@@ -7,7 +7,6 @@ import { replaceURL } from "../libs/helpers/replace-location";
 import { api } from "../api";
 const path = "http://localhost:3000/";
 const AddDrive = () => {
-    const [myDrives, setMyDrives] = React.useState([]);
     useEffect(() => {
         const getDrives = async () => {
             try {
@@ -19,8 +18,10 @@ const AddDrive = () => {
                             )}`,
                         },
                     })
-                    .then((res) => console.log(res.data));
-                // setMyDrives(res.data);
+                    .then((res) => {
+                        const myDrive = JSON.stringify(res.data.data);
+                        localStorage.setItem("my-drives", myDrive);
+                    });
             } catch (error) {
                 console.log(error);
             }
