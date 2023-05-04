@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import { PATHS } from "../../router";
 import { useAuth } from "../../context/auth-context";
+import { useModalContext } from "../../context/modal-context";
 interface Props {
     toggleIsLeftSidebarActive: () => void;
     toggleIsRightSidebarActive: () => void;
@@ -13,7 +14,10 @@ const Navbar = ({
     toggleIsRightSidebarActive,
 }: Props) => {
     const { isAutheticated, username } = useAuth();
-
+    const { setOpenModal } = useModalContext();
+    const openModal = () => {
+        setOpenModal(true);
+    };
     return (
         <nav className="bg-white py-6 border-b">
             <div className="flex items-center px-12">
@@ -62,9 +66,9 @@ const Navbar = ({
                                     className="bg-gray-100 px-4 py-2 rounded text-sm w-96"
                                 />
                             </form>
-                            <Link
+                            <button
                                 className="btn btn-sm btn-primary px-8"
-                                to="/upload"
+                                onClick={openModal}
                             >
                                 <svg
                                     width="14"
@@ -79,7 +83,7 @@ const Navbar = ({
                                     />
                                 </svg>
                                 Upload
-                            </Link>
+                            </button>
                             {/* probably create folder */}
                             <Link
                                 className="btn btn-sm btn-secondary px-8"
