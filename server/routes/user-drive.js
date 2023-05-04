@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const salt = 10;
 const { User, UserDriveSchema, userDriveSchema } = require("../models/user");
 const { getDriveInstance } = require("../google-drive-routes");
+const upload = require("../middlewares/upload");
 // This route is PROTECTED by auth middleware
 
 // will get you all connected drives with tokens [driveId, token]
@@ -78,7 +79,7 @@ router.post("/getFiles", async (req, res) => {
     const response = await drive.files.list({
         pageSize: 10,
         q: `'${folderId}' in parents and trashed = false`,
-        fields: "files(id, name, createdTime,mimeType)",
+        fields: "files(id, name, createdTime,mimeType, webContentLink)",
     });
     const files = response.data.files;
     if (files.length) {
@@ -107,5 +108,71 @@ router.post("/about", async (req, res) => {
         res.status(500).send("Server error");
     }
 });
+
+router.post("/upload", upload.single("file"), (req, res) => {
+    if (!req.auth.userId) return res.send("User not found");
+    const { token } = req.body;
+
+    const filePath = req.file.path;
+    const fileMetadata = {
+        name: req.file.originalname,
+    };
+    const media = {
+        mimeType: req.file.mimetype,
+        body: fs.createReadStream(filePath),
+    };
+
+    const drive = getDriveInstance(token);
+    drive.files.create(
+        {
+            resource: fileMetadata,
+            media: media,
+            fields: "id",
+        },
+        (err, file) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send(err);
+            } else {
+                console.log(`File ID: ${file.data.id}`);
+                res.send(`File ID: ${file.data.id}`);
+            }
+
+            fs.unlinkSync(filePath);
+        }
+    );
+});
+
+router.post("/search", async (req, res) => {
+    const { fileName, token } = req.body;
+    const drive = getDriveInstance(token);
+    try {
+        const files = await searchFiles(fileName, drive);
+        res.status(200).json({ data: files });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({ message: "Error while searching" });
+    }
+});
+
+async function searchFiles(query, drive) {
+    try {
+        const response = await drive.files.list({
+            q: `name contains '${query}'`,
+            fields: "nextPageToken, files(id, name, mimeType, webContentLink)",
+        });
+
+        const files = response.data.files;
+        console.log(`Found ${files.length} files:`);
+
+        files.forEach((file) => {
+            console.log(`${file.name} (${file.mimeType}) - ${file.id}`);
+        });
+        return files;
+    } catch (err) {
+        console.log("drive: ", err);
+        throw new Error(err);
+    }
+}
 
 module.exports = router;
