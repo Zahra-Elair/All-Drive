@@ -9,7 +9,7 @@ import { Folder } from "../types/folder";
 import { useParams } from "react-router-dom";
 
 const FolderFiles = () => {
-    const [files, setFiles] = useState<Folder[]>([]);
+    const [files, setFiles] = useState<any[]>([]);
     const { id } = useParams<{ id: string }>();
     const [token, setToken] = useState(() =>
         localStorage.getItem("google-drive")
@@ -31,6 +31,7 @@ const FolderFiles = () => {
     useEffect(() => {
         getFiles();
     }, []);
+
     return (
         <div>
             <section>
@@ -63,6 +64,7 @@ const FolderFiles = () => {
                             key={file.id}
                             name={file.name}
                             type={file.mimeType as any}
+                            downloadUrl={file.webContentLink as string}
                         />
                     ))}
                 </div>

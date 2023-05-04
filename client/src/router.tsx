@@ -9,6 +9,7 @@ import RecycleBin from "./pages/RecycleBin";
 import SharedFiles from "./pages/SharedFiles";
 import AddDriveMiddleware from "./pages/AddDriveMiddleware";
 import FolderFiles from "./pages/folderFiles";
+import Search from "./pages/Search";
 
 type PATHSProps = {
     app: {
@@ -24,7 +25,9 @@ type PATHSProps = {
         sharedFiles: string;
         recycleBin: string;
         addDriveMiddleware: string;
+        search: string;
     };
+
     auth: {
         root: string;
         login: string;
@@ -48,6 +51,7 @@ export const PATHS: PATHSProps = {
         sharedFiles: "/shared-files",
         recycleBin: "/recycle-bin",
         addDriveMiddleware: "/add-drive-middleware/:type/:access_token",
+        search: "/search",
     },
     auth: {
         root: "/auth",
@@ -79,6 +83,14 @@ const router = createBrowserRouter([
             {
                 path: PATHS.app.myFolders + "/:id",
                 element: <FolderFiles />,
+            },
+            {
+                path: PATHS.app.search + "/:searchTerm",
+                element: <Search />,
+            },
+            {
+                path: PATHS.app.search,
+                element: <Search />,
             },
         ],
     },

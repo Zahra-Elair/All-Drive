@@ -4,6 +4,8 @@ import { BiLogOut } from "react-icons/bi";
 import { PATHS } from "../../router";
 import { useAuth } from "../../context/auth-context";
 import { useModalContext } from "../../context/modal-context";
+import { api } from "../../api";
+import { toast } from "react-toastify";
 interface Props {
     toggleIsLeftSidebarActive: () => void;
     toggleIsRightSidebarActive: () => void;
@@ -17,6 +19,13 @@ const Navbar = ({
     const { setOpenModal } = useModalContext();
     const openModal = () => {
         setOpenModal(true);
+    };
+    const navigate = useNavigate();
+
+    const [searchTerm, setSearchTerm] = React.useState<string>("");
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        navigate(PATHS.app.search + (searchTerm ? "/" + searchTerm : ""));
     };
     return (
         <nav className="bg-white py-6 border-b">
@@ -59,11 +68,18 @@ const Navbar = ({
                     <div className="flex items-center gap-4 sm:gap-12">
                         {/* search input & upload, and create buttons */}
                         <div className="hidden sm:flex items-center gap-4">
-                            <form className="hidden lg:block">
+                            <form
+                                className="hidden lg:block"
+                                onSubmit={onSubmit}
+                            >
                                 <input
                                     type="text"
                                     placeholder="Type to seach..."
                                     className="bg-gray-100 px-4 py-2 rounded text-sm w-96"
+                                    value={searchTerm}
+                                    onChange={(e) =>
+                                        setSearchTerm(e.target.value)
+                                    }
                                 />
                             </form>
                             <button

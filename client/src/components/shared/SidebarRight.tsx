@@ -21,9 +21,16 @@ const SidebarRight = ({ isOpen }: Props) => {
     const [usedStorage, setUsedStorage] = useState(0);
     const [limitStorage, setLimitStorage] = useState(0);
     function getStorageData() {
-        api.post("/about", { token }).then((res) => {
-            console.log(res.data.data);
-            const { limit, usage } = res.data.data.storageQuota;
+        api.post(
+            "/user-drive/about",
+            { token },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            }
+        ).then((res) => {
+            const { limit, usage } = res.data.data;
             setUsedStorage(usage);
             setLimitStorage(limit);
         });
