@@ -6,6 +6,7 @@ const { User, UserDriveSchema, userDriveSchema } = require("../models/user");
 const { getDriveInstance } = require("../google-drive-routes");
 const upload = require("../middlewares/upload");
 // This route is PROTECTED by auth middleware
+const fs = require("fs");
 
 // will get you all connected drives with tokens [driveId, token]
 // ? can do INNER JOIN to get driveName
@@ -112,7 +113,8 @@ router.post("/about", async (req, res) => {
 router.post("/upload", upload.single("file"), (req, res) => {
     if (!req.auth.userId) return res.send("User not found");
     const { token } = req.body;
-
+    console.log("token ", token);
+    console.log("fileeeeee ", req.file);
     const filePath = req.file.path;
     const fileMetadata = {
         name: req.file.originalname,
@@ -123,6 +125,8 @@ router.post("/upload", upload.single("file"), (req, res) => {
     };
 
     const drive = getDriveInstance(token);
+    console.log(drive);
+
     drive.files.create(
         {
             resource: fileMetadata,
@@ -141,6 +145,7 @@ router.post("/upload", upload.single("file"), (req, res) => {
             fs.unlinkSync(filePath);
         }
     );
+    // res.status(200).json({ message: "File uploaded successfully" });
 });
 
 router.post("/search", async (req, res) => {
