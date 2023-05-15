@@ -17,5 +17,11 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
+  "baseUrl": "src",
+  "paths": {
+    "@/*": ["*"],
+    "@icons/*": ["assets/icons/*"]
+  },
+
   "references": [{ "path": "./tsconfig.node.json" }]
 }
